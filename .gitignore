@@ -1,0 +1,44 @@
+# ── Secrets — NEVER commit ────────────────────────────────────────────────────
+.env
+*.env
+!.env.example
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+build/
+dist/
+wheels/
+
+# ── uv ────────────────────────────────────────────────────────────────────────
+uv.lock
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
+# ── ChromaDB (local vector store — rebuilt on Colab) ─────────────────────────
+chroma_db/
+
+# ── Model weights (use HF Hub instead) ───────────────────────────────────────
+nova-brand-voice-adapter/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# ── W&B local runs ────────────────────────────────────────────────────────────
+wandb/
+
+# ── Generated during runs (not needed in repo) ────────────────────────────────
+nova_brand_voice_dataset.json
+task1_results.json
+task4_eval_report.json
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
