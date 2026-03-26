@@ -11,10 +11,10 @@
 
 | Resource | Link |
 |----------|------|
-| Task 1 — Prompt Engineering Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
+| Task 1 — Prompt Engineering Colab | [Open Notebook]https://drive.google.com/file/d/1qxJ9Ey83wrnnKMqA2iCtFzE0KQTbCVuP/view?usp=sharing |
 | Task 2 — MCP Demo Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
-| Task 3 — RAG Pipeline Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
-| Task 4 — Fine-tuning Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
+| Task 3 — RAG Pipeline Colab | [Open Notebook]https://drive.google.com/file/d/1jv0lvRguqb2xm89tfQq1H_5gCYL40uSH/view?usp=sharing|
+| Task 4 — Fine-tuning Colab | [Open Notebook]https://drive.google.com/file/d/1mHuW9k8IGT0gDWN0OPrcqeuIaZzA-kwJ/view?usp=sharing |
 | Task 5 — Multi-Agent Demo Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
 | W&B Training Dashboard | [View Run](REPLACE_WITH_WANDB_LINK) |
 | Fine-tuned Model (HF Hub) | [Model Card](REPLACE_WITH_HF_LINK) |
