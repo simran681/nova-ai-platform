@@ -58,8 +58,8 @@ class NOVAState(TypedDict):
 class NOVAPlatformConfig:
     def __init__(
         self,
-        openrouter_api_key: str,
-        llm_model: str = "mistralai/mistral-7b-instruct:free",
+        groq_api_key: str,
+        llm_model: str = "llama-3.1-8b-instant",
         mock_db_path: str = "nova_mock_db.json",
         chroma_path: str = "./chroma_db",
         audit_log_path: str = "nova_traces.json",
@@ -67,7 +67,7 @@ class NOVAPlatformConfig:
         use_rag: bool = True,
         use_brand_voice: bool = True
     ):
-        self.openrouter_api_key = openrouter_api_key
+        self.groq_api_key = groq_api_key
         self.llm_model = llm_model
         self.mock_db_path = mock_db_path
         self.chroma_path = chroma_path
@@ -111,14 +111,10 @@ class NOVAPlatform:
         self.config = config
         self.traces = []
 
-        # Initialize LLM client (OpenRouter)
+        # Initialize LLM client (Groq)
         self.llm = OpenAI(
-            api_key=config.openrouter_api_key,
-            base_url="https://openrouter.ai/api/v1",
-            default_headers={
-                "HTTP-Referer": "https://github.com/nova-ai-platform",
-                "X-Title": "NOVA AI Platform"
-            }
+            api_key=config.groq_api_key,
+            base_url="https://api.groq.com/openai/v1",
         )
 
         # Initialize MCP client (local, no server needed)
@@ -224,7 +220,7 @@ class NOVAPlatform:
 
     def _llm_call(self, prompt: str, system: str = "", temperature: float = 0.3,
                   max_tokens: int = 400) -> str:
-        """Make a call to the OpenRouter LLM."""
+        """Make a call to the Groq LLM."""
         messages = []
         if system:
             messages.append({"role": "system", "content": system})

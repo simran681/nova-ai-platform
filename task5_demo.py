@@ -24,11 +24,11 @@ from task5_nova_platform import NOVAPlatform, NOVAPlatformConfig
 
 
 def get_api_key() -> str:
-    """Get OpenRouter API key from environment or prompt."""
-    key = os.getenv("OPENROUTER_API_KEY", "")
+    """Get Groq API key from environment."""
+    key = os.getenv("GROQ_API_KEY", "")
     if not key:
-        print("⚠️  OPENROUTER_API_KEY not set in environment.")
-        print("    Set it with: export OPENROUTER_API_KEY=your_key")
+        print("⚠️  GROQ_API_KEY not set in environment.")
+        print("    Set it with: export GROQ_API_KEY=your_key")
         print("    Or add to .env file\n")
     return key
 
@@ -206,8 +206,8 @@ if __name__ == "__main__":
 
     # Initialize platform
     config = NOVAPlatformConfig(
-        openrouter_api_key=get_api_key(),
-        llm_model="mistralai/mistral-7b-instruct:free",
+        groq_api_key=get_api_key(),
+        llm_model="llama-3.1-8b-instant",
         mock_db_path="nova_mock_db.json",
         chroma_path="./chroma_db",
         audit_log_path="nova_traces.json",

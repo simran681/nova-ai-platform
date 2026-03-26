@@ -65,7 +65,7 @@ class NOVARAGPipeline:
         chroma_collection: str = "nova_products",
         chroma_path: str = "./chroma_db",
         llm_client=None,
-        llm_model: str = "mistralai/mistral-7b-instruct:free",
+        llm_model: str = "llama-3.1-8b-instant",
         top_k_retrieval: int = 10,
         top_k_final: int = 3,
         rrf_k: int = 60,

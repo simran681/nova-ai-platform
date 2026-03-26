@@ -7,17 +7,15 @@
 
 ---
 
-## Shareable Links (Fill in after running on Colab)
+## Shareable Links
 
 | Resource | Link |
 |----------|------|
-| Task 1 — Prompt Engineering Colab | [Open Notebook]https://drive.google.com/file/d/1qxJ9Ey83wrnnKMqA2iCtFzE0KQTbCVuP/view?usp=sharing |
-| Task 2 — MCP Demo Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
-| Task 3 — RAG Pipeline Colab | [Open Notebook]https://drive.google.com/file/d/1jv0lvRguqb2xm89tfQq1H_5gCYL40uSH/view?usp=sharing|
-| Task 4 — Fine-tuning Colab | [Open Notebook]https://drive.google.com/file/d/1mHuW9k8IGT0gDWN0OPrcqeuIaZzA-kwJ/view?usp=sharing |
-| Task 5 — Multi-Agent Demo Colab | [Open Notebook](REPLACE_WITH_COLAB_LINK) |
+| Task 1 — Prompt Engineering Colab | [Open Notebook](https://drive.google.com/file/d/1qxJ9Ey83wrnnKMqA2iCtFzE0KQTbCVuP/view?usp=sharing) |
+| Task 3 — RAG Pipeline Colab | [Open Notebook](https://drive.google.com/file/d/1jv0lvRguqb2xm89tfQq1H_5gCYL40uSH/view?usp=sharing) |
+| Task 4 — Fine-tuning Colab | [Open Notebook](https://drive.google.com/file/d/1mHuW9k8IGT0gDWN0OPrcqeuIaZzA-kwJ/view?usp=sharing) |
 | W&B Training Dashboard | [View Run](REPLACE_WITH_WANDB_LINK) |
-| Fine-tuned Model (HF Hub) | [Model Card](REPLACE_WITH_HF_LINK) |
+| Fine-tuned Model (HF Hub) | [simran681/nova-brand-voice-tinyllama](https://huggingface.co/simran681/nova-brand-voice-tinyllama) |
 | GitHub Repository | [simran681/nova-ai-platform](https://github.com/simran681/nova-ai-platform) |
 
 ---
@@ -26,13 +24,13 @@
 
 NOVA's AI Support & Personalization Platform — a complete multi-agent system that handles routine customer support autonomously, surfaces personalised product recommendations, and escalates complex cases to humans with full audit trails.
 
-| Capability | Task | Status |
-|-----------|------|--------|
-| Prompt Engineering (COSTAR + CoT) | Task 1 | ✅ Complete |
-| MCP Backend Tools (5 tools + audit) | Task 2 | ✅ Complete |
-| RAG Pipeline (hybrid search + RAGAS) | Task 3 | ✅ Complete |
-| QLoRA Fine-tuning (TinyLlama brand voice) | Task 4 | ✅ Complete |
-| LangGraph Multi-Agent Platform | Task 5 | ✅ Complete |
+| Capability | Task | Runs On | Status |
+|-----------|------|---------|--------|
+| Prompt Engineering (COSTAR + CoT) | Task 1 | Colab (CPU) | ✅ Complete |
+| MCP Backend Tools (5 tools + audit) | Task 2 | Local | ✅ Complete |
+| RAG Pipeline (hybrid search + RAGAS) | Task 3 | Colab (CPU) | ✅ Complete |
+| QLoRA Fine-tuning (TinyLlama brand voice) | Task 4 | Colab (T4 GPU) | ✅ Complete |
+| LangGraph Multi-Agent Platform | Task 5 | Local | ✅ Complete |
 
 ---
 
@@ -107,9 +105,8 @@ nova-ai-platform/
 ├── rag_module.py                      ← Importable NOVARAGPipeline class
 │
 ├── task5_nova_platform.py             ← Task 5: LangGraph multi-agent system
-├── task5_demo.py                      ← Task 5: 3-scenario demo script
+├── task5_demo.py                      ← Task 5: 3-scenario demo script (run locally)
 │
-├── nova_agent_graph.png               ← LangGraph visualization
 ├── evaluation_report.json             ← RAGAS evaluation results
 ├── audit_log.jsonl                    ← MCP tool call audit log
 └── nova_traces.json                   ← Agent session audit trails
@@ -132,11 +129,8 @@ cd nova-ai-platform
 # Install uv if not already installed
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Sync all dependencies (excludes Task 4 GPU packages)
+# Sync all dependencies
 uv sync
-
-# Activate the virtual environment
-source .venv/bin/activate
 ```
 
 ### 3. Set Environment Variables
@@ -147,15 +141,9 @@ cp .env.example .env
 ```
 
 Required API keys:
-- **OPENROUTER_API_KEY** — Free at [openrouter.ai](https://openrouter.ai) (use free-tier models)
+- **GROQ_API_KEY** — Free at [console.groq.com](https://console.groq.com) (no credit card needed)
 - **HF_TOKEN** — Free at [huggingface.co](https://huggingface.co/settings/tokens) (for Task 4)
 - **WANDB_API_KEY** — Free at [wandb.ai](https://wandb.ai) (for Task 4 tracking)
-
-### 4. Generate Mock Data
-
-```bash
-python generate_mock_db.py
-```
 
 ---
 
@@ -163,13 +151,7 @@ python generate_mock_db.py
 
 ### Task 1 — Prompt Engineering
 
-**In Colab**: Upload `task1_prompt_engineering.ipynb` → Run All
-
-**Locally** (no GPU needed):
-```bash
-# Set OPENROUTER_API_KEY in .env first
-jupyter notebook task1_prompt_engineering.ipynb
-```
+**In Colab**: Open the shared notebook → add `GROQ_API_KEY` to Colab Secrets → Run All
 
 **What it demonstrates**:
 - COSTAR system prompt for NOVA support agent
@@ -183,16 +165,16 @@ jupyter notebook task1_prompt_engineering.ipynb
 
 **Option A: Local client (no server needed)**
 ```bash
-python task2_mcp/demo.py
+uv run python task2_mcp/demo.py
 ```
 
 **Option B: Full HTTP server**
 ```bash
-# Terminal 1: Start server
-uvicorn task2_mcp.server:app --reload --port 8001
+# Terminal 1
+uv run uvicorn task2_mcp.server:app --reload --port 8001
 
-# Terminal 2: Run demo against server
-python task2_mcp/demo.py --server
+# Terminal 2
+uv run python task2_mcp/demo.py --server
 ```
 
 **What it demonstrates**:
@@ -204,16 +186,10 @@ python task2_mcp/demo.py --server
 
 ### Task 3 — RAG Pipeline
 
-**In Colab** (recommended — runs on CPU, no GPU needed):
-1. Upload `task3_rag_pipeline.ipynb` and `nova_mock_db.json` and `rag_module.py`
-2. Add `OPENROUTER_API_KEY` to Colab Secrets
+**In Colab** (recommended — CPU only, no GPU needed):
+1. Open the shared notebook
+2. Add `GROQ_API_KEY` to Colab Secrets (🔑 icon) and enable notebook access
 3. Run All
-
-**Locally**:
-```bash
-pip install chromadb sentence-transformers rank-bm25 ragas
-jupyter notebook task3_rag_pipeline.ipynb
-```
 
 **What it demonstrates**:
 - BM25 + ChromaDB hybrid search with RRF fusion
@@ -226,14 +202,14 @@ jupyter notebook task3_rag_pipeline.ipynb
 
 **In Colab** (T4 GPU required):
 1. Runtime → Change runtime type → **T4 GPU**
-2. Upload `task4_finetune.ipynb`
-3. Add secrets: `OPENROUTER_API_KEY`, `HF_TOKEN`, `WANDB_API_KEY`
+2. Open the shared notebook
+3. Add secrets: `GROQ_API_KEY`, `HF_TOKEN`, `WANDB_API_KEY`
 4. Run All (~15-20 minutes)
 
 **Architecture**:
 - Base: `TinyLlama/TinyLlama-1.1B-Chat-v1.0`
 - Method: QLoRA (rank=16, NF4 4-bit quantization)
-- Dataset: 200 synthetic brand voice training pairs (generated via LLM)
+- Dataset: 200 synthetic brand voice training pairs
 - Trainer: TRL `SFTTrainer`
 - Tracking: Weights & Biases
 
@@ -246,18 +222,30 @@ jupyter notebook task3_rag_pipeline.ipynb
 
 ### Task 5 — Multi-Agent Platform
 
-**In Colab** (T4 GPU recommended for brand voice model, CPU works with fallback):
+**Runs locally** (no Colab needed):
+```bash
+# Run all 3 demo scenarios
+uv run python task5_demo.py --all
+
+# Run a specific scenario
+uv run python task5_demo.py --scenario 1
+uv run python task5_demo.py --scenario 2
+uv run python task5_demo.py --scenario 3
+```
+
+**Or use programmatically**:
 ```python
-# In Colab cell:
 from task5_nova_platform import NOVAPlatform, NOVAPlatformConfig
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 config = NOVAPlatformConfig(
-    openrouter_api_key=OPENROUTER_API_KEY,
+    groq_api_key=os.getenv("GROQ_API_KEY"),
     mock_db_path="nova_mock_db.json"
 )
 platform = NOVAPlatform(config)
 
-# Run a ticket
 result = platform.process_ticket(
     "My order ORD-1042 hasn't arrived!",
     customer_id="CUST-1010"
@@ -265,15 +253,13 @@ result = platform.process_ticket(
 print(result['final_response'])
 ```
 
-**Run 3-scenario demo**:
-```bash
-python task5_demo.py --all
-```
-
 **What it demonstrates**:
-- LangGraph state machine with 6 nodes
-- Conditional routing based on intent
-- Human-in-the-loop escalation
+- LangGraph state machine with 7 nodes
+- Conditional routing based on intent (Task 1 CoT)
+- MCP tool calls for order/return/recommendations (Task 2)
+- Hybrid RAG for product knowledge (Task 3)
+- Brand voice polishing via fine-tuned model (Task 4)
+- Human-in-the-loop escalation (HITL)
 - Full audit trail per session → `nova_traces.json`
 
 ---
@@ -282,7 +268,7 @@ python task5_demo.py --all
 
 | Component | Technology | Why |
 |-----------|-----------|-----|
-| Inference LLM | OpenRouter (Mistral-7B free) | Free, powerful, no GPU needed |
+| Inference LLM | Groq (llama-3.1-8b-instant) | Free, fast, no GPU needed |
 | Fine-tuning base | TinyLlama-1.1B-Chat | Fits Colab Free T4 confidently |
 | Fine-tuning method | QLoRA (4-bit NF4) | ~80% memory reduction vs full fine-tune |
 | Training framework | TRL SFTTrainer | HuggingFace native, Colab-tested |
@@ -336,8 +322,9 @@ Results logged to W&B. Brand voice score on 20 held-out queries.
 
 ## Notes
 
-- All tasks designed to run on **Google Colab Free Tier** (T4 GPU / CPU)
-- No paid cloud services required — all tools use free tiers
+- Tasks 1, 3, 4 run on **Google Colab** (CPU or T4 GPU)
+- Tasks 2 and 5 run **locally** using `uv run`
+- LLM: **Groq** (`llama-3.1-8b-instant`) — free, no credit card required
 - Synthetic data generated with Python Faker (no real customer data)
 - Prompts versioned in `prompts/` directory (easily updatable)
 - `rag_module.py` is importable and reused by both Task 3 notebook and Task 5
@@ -345,4 +332,4 @@ Results logged to W&B. Brand voice score on 20 held-out queries.
 
 ---
 
-*Built by: [Your Name] | NOVA AI Engineer Assessment | 2026*
+*Built by: Simran | NOVA AI Engineer Assessment | 2026*
