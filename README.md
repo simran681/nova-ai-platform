@@ -31,7 +31,7 @@ NOVA's AI Support & Personalization Platform — a complete multi-agent system t
 | MCP Backend Tools (5 tools + audit) | Task 2 | Local | ✅ Complete |
 | RAG Pipeline (hybrid search + RAGAS) | Task 3 | Colab (CPU) | ✅ Complete |
 | QLoRA Fine-tuning (TinyLlama brand voice) | Task 4 | Colab (T4 GPU) | ✅ Complete |
-| LangGraph Multi-Agent Platform | Task 5 | Local | ✅ Complete |
+| LangGraph Multi-Agent Platform | Task 5 | Colab (T4 GPU) | ✅ Complete |
 
 ---
 
