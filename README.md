@@ -14,7 +14,8 @@
 | Task 1 — Prompt Engineering Colab | [Open Notebook](https://drive.google.com/file/d/1qxJ9Ey83wrnnKMqA2iCtFzE0KQTbCVuP/view?usp=sharing) |
 | Task 3 — RAG Pipeline Colab | [Open Notebook](https://drive.google.com/file/d/1jv0lvRguqb2xm89tfQq1H_5gCYL40uSH/view?usp=sharing) |
 | Task 4 — Fine-tuning Colab | [Open Notebook](https://drive.google.com/file/d/1mHuW9k8IGT0gDWN0OPrcqeuIaZzA-kwJ/view?usp=sharing) |
-| W&B Training Dashboard | [View Run](REPLACE_WITH_WANDB_LINK) |
+| Task 5 — Multi-Agent Platform Colab | [Open Notebook](https://drive.google.com/file/d/1y0rLpfhZTi2gQIfRaKlAd7cMDkQucXKg/view?usp=sharing) |
+| W&B Training Dashboard | [View Run](https://wandb.ai/chandanisimran51-none/nova-brand-voice/runs/gsju51v5) |
 | Fine-tuned Model (HF Hub) | [simran681/nova-brand-voice-tinyllama](https://huggingface.co/simran681/nova-brand-voice-tinyllama) |
 | GitHub Repository | [simran681/nova-ai-platform](https://github.com/simran681/nova-ai-platform) |
 
@@ -80,36 +81,32 @@ Customer Query
 
 ```
 nova-ai-platform/
-├── README.md                          ← This file
+├── README.md                          ← Setup instructions + all shareable links
 ├── requirements.txt                   ← All pinned dependencies
-├── .env.example                       ← Environment variable template
-├── nova_mock_db.json                  ← Synthetic order/customer/product data
-├── generate_mock_db.py                ← Script to regenerate mock data
+├── .env.example                       ← Environment variable template (no real keys)
+├── nova_mock_db.json                  ← Synthetic order/customer/product data (200 products)
 │
 ├── prompts/
 │   ├── system_prompt_v1.txt           ← COSTAR framework system prompt
 │   ├── intent_classifier_v1.txt       ← Chain-of-Thought intent classifier
 │   └── escalation_detector_v1.txt     ← Frustration/escalation detector
 │
-├── notebooks/
-│   ├── task1_prompt_engineering.ipynb ← Task 1: Prompt engineering demo (Colab)
-│   ├── task3_rag_pipeline.ipynb       ← Task 3: RAG pipeline + RAGAS eval (Colab)
-│   └── task4_finetune.ipynb           ← Task 4: QLoRA fine-tuning (Colab T4 GPU)
-│
-├── task2_mcp/
-│   ├── __init__.py
-│   ├── server.py                      ← FastAPI MCP server (5 tools)
-│   ├── client.py                      ← MCP client (HTTP + local)
-│   └── demo.py                        ← Compound scenario demo
-│
-├── rag_module.py                      ← Importable NOVARAGPipeline class
-│
+├── task1_prompt_engineering.ipynb     ← Task 1: Prompt engineering (Colab)
+├── task2_mcp/                         ← Task 2: MCP server + client + demo
+│   ├── server.py
+│   ├── client.py
+│   └── demo.py
+├── task3_rag_pipeline.ipynb           ← Task 3: RAG pipeline + RAGAS eval (Colab)
+├── rag_module.py                      ← Importable NOVARAGPipeline (used by Task 5)
+├── task4_finetune.ipynb               ← Task 4: QLoRA fine-tuning (Colab T4 GPU)
 ├── task5_nova_platform.py             ← Task 5: LangGraph multi-agent system
-├── task5_demo.py                      ← Task 5: 3-scenario demo script (run locally)
+├── task5_nova_platform.ipynb          ← Task 5: Multi-agent platform (Colab T4 GPU)
+├── task5_demo.py                      ← Task 5: 3-scenario demo script
 │
-├── evaluation_report.json             ← RAGAS evaluation results
-├── audit_log.jsonl                    ← MCP tool call audit log
-└── nova_traces.json                   ← Agent session audit trails
+├── nova_agent_graph.png               ← LangGraph agent workflow visualization
+├── evaluation_report.json             ← RAGAS evaluation results (Task 3)
+├── audit_log.jsonl                    ← MCP tool call audit log (Task 2)
+└── nova_traces.json                   ← Agent session audit trails (Task 5)
 ```
 
 ---
@@ -213,10 +210,12 @@ uv run python task2_mcp/demo.py --server
 - Trainer: TRL `SFTTrainer`
 - Tracking: Weights & Biases
 
-**Expected results**:
-- Training loss: ~1.0 → 0.5 over 3 epochs
-- Brand voice score: >0.7/1.0
+**Actual results**:
+- Train loss: 1.1398 | Eval loss: 0.8827
+- Brand voice score: **0.860 / 1.0** (empathy 0.95, warmth 0.98)
 - Training time: ~15 minutes on T4
+- Fine-tuned model: [simran681/nova-brand-voice-tinyllama](https://huggingface.co/simran681/nova-brand-voice-tinyllama)
+- W&B run: [tinyllama-qlora-1774596482](https://wandb.ai/chandanisimran51-none/nova-brand-voice/runs/gsju51v5)
 
 ---
 
@@ -286,23 +285,26 @@ print(result['final_response'])
 ## Evaluation Results
 
 ### Task 3 — RAG (RAGAS scores on 20 Q&A pairs)
-Results saved in `evaluation_report.json` after running Task 3 notebook.
+Results saved in `evaluation_report.json`.
 
 | Metric | Score |
 |--------|-------|
-| Faithfulness | TBD (run Task 3) |
-| Answer Relevancy | TBD |
-| Context Precision | TBD |
-| Context Recall | TBD |
+| Faithfulness | 0.765 ✅ |
+| Context Precision | 0.617 ⚠️ |
+| Context Recall | 0.905 ✅ |
+| Answer Correctness | 0.773 ✅ |
 
 ### Task 4 — Fine-tuning
-Results logged to W&B. Brand voice score on 20 held-out queries.
+Results logged to [W&B](https://wandb.ai/chandanisimran51-none/nova-brand-voice/runs/gsju51v5). Brand voice score on 20 held-out queries.
 
 | Metric | Score |
 |--------|-------|
-| Train Loss (final) | TBD (run Task 4) |
-| Brand Voice Score | TBD |
-| Empathy Score | TBD |
+| Train Loss (final) | 1.1398 |
+| Eval Loss | 0.8827 |
+| Brand Voice Score | **0.860 / 1.0** ✅ |
+| Empathy Score | 0.950 ✅ |
+| Warmth Score | 0.984 ✅ |
+| Action Score | 0.425 ⚠️ |
 
 ---
 

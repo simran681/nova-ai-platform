@@ -1,1 +1,173 @@
-{}
+{
+  "task": "Task 3 - RAG Pipeline Evaluation",
+  "timestamp": "2026-03-27T10:00:00Z",
+  "llm": "groq/llama-3.1-8b-instant",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+  "search_strategy": "BM25 + ChromaDB (cosine) \u2192 RRF fusion \u2192 cross-encoder rerank",
+  "num_test_questions": 20,
+  "metrics_used": [
+    "faithfulness",
+    "context_precision",
+    "context_recall",
+    "answer_correctness"
+  ],
+  "aggregate_scores": {
+    "faithfulness": 0.765,
+    "context_precision": 0.6167,
+    "context_recall": 0.905,
+    "answer_correctness": 0.7725
+  },
+  "per_question_scores": [
+    {
+      "question": "Does the Glow Serum contain niacinamide?",
+      "faithfulness": 0.5,
+      "context_precision": 0.333,
+      "context_recall": 0.8,
+      "answer_correctness": 0.8
+    },
+    {
+      "question": "What ingredients should I avoid during pregnancy?",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "context_recall": 1.0,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "Is niacinamide safe for sensitive skin?",
+      "faithfulness": 0.8,
+      "context_precision": 1.0,
+      "context_recall": 0.9,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "What is bakuchiol and is it a retinol alternative?",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "answer_correctness": 1.0
+    },
+    {
+      "question": "Does NOVA use parabens in their skincare?",
+      "faithfulness": 0.25,
+      "context_precision": 0.0,
+      "context_recall": 0.8,
+      "answer_correctness": 0.5
+    },
+    {
+      "question": "Are all NOVA products cruelty-free?",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "answer_correctness": 1.0
+    },
+    {
+      "question": "What ingredients make a product non-vegan?",
+      "faithfulness": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.9,
+      "answer_correctness": 1.0
+    },
+    {
+      "question": "What size should I order if I am usually a US size 8?",
+      "faithfulness": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 0.8,
+      "answer_correctness": 0.0
+    },
+    {
+      "question": "What EU shoe size is equivalent to UK size 6?",
+      "faithfulness": 0.5,
+      "context_precision": 0.667,
+      "context_recall": 1.0,
+      "answer_correctness": 0.8
+    },
+    {
+      "question": "If I am between sizes, should I size up or down?",
+      "faithfulness": 1.0,
+      "context_precision": 0.667,
+      "context_recall": 1.0,
+      "answer_correctness": 1.0
+    },
+    {
+      "question": "What skincare ingredients are best for oily skin?",
+      "faithfulness": 0.8,
+      "context_precision": 1.0,
+      "context_recall": 0.8,
+      "answer_correctness": 0.4
+    },
+    {
+      "question": "What ingredients help with dry skin?",
+      "faithfulness": 0.8,
+      "context_precision": 1.0,
+      "context_recall": 0.9,
+      "answer_correctness": 0.8
+    },
+    {
+      "question": "What should sensitive skin avoid?",
+      "faithfulness": 0.6,
+      "context_precision": 1.0,
+      "context_recall": 0.9,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "What is NOVA's return policy?",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "context_recall": 0.8,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "Can I return opened skincare products?",
+      "faithfulness": 0.8,
+      "context_precision": 0.667,
+      "context_recall": 1.0,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "How long does international shipping take?",
+      "faithfulness": 0.5,
+      "context_precision": 0.333,
+      "context_recall": 0.8,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "Does NOVA offer free shipping?",
+      "faithfulness": 0.25,
+      "context_precision": 0.333,
+      "context_recall": 0.8,
+      "answer_correctness": 0.0
+    },
+    {
+      "question": "How does the NOVA loyalty program work?",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "context_recall": 0.9,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "What SPF products does NOVA offer?",
+      "faithfulness": 0.5,
+      "context_precision": 1.0,
+      "context_recall": 1.0,
+      "answer_correctness": 0.9
+    },
+    {
+      "question": "What payment methods does NOVA accept?",
+      "faithfulness": 1.0,
+      "context_precision": 0.333,
+      "context_recall": 1.0,
+      "answer_correctness": 0.95
+    }
+  ],
+  "index_stats": {
+    "is_built": true,
+    "num_documents": 210,
+    "num_chunks": 312,
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "top_k_retrieval": 10,
+    "top_k_final": 3,
+    "chroma_collection": "nova_products"
+  }
+}
