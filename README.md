@@ -120,14 +120,10 @@ git clone https://github.com/simran681/nova-ai-platform.git
 cd nova-ai-platform
 ```
 
-### 2. Install Dependencies (uv — recommended)
+### 2. Install Dependencies
 
 ```bash
-# Install uv if not already installed
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Sync all dependencies
-uv sync
+pip install -r requirements.txt
 ```
 
 ### 3. Set Environment Variables
@@ -162,16 +158,16 @@ Required API keys:
 
 **Option A: Local client (no server needed)**
 ```bash
-uv run python task2_mcp/demo.py
+python3 task2_mcp/demo.py
 ```
 
 **Option B: Full HTTP server**
 ```bash
 # Terminal 1
-uv run uvicorn task2_mcp.server:app --reload --port 8001
+uvicorn task2_mcp.server:app --reload --port 8001
 
 # Terminal 2
-uv run python task2_mcp/demo.py --server
+python3 task2_mcp/demo.py --server
 ```
 
 **What it demonstrates**:
@@ -224,12 +220,12 @@ uv run python task2_mcp/demo.py --server
 **Runs locally** (no Colab needed):
 ```bash
 # Run all 3 demo scenarios
-uv run python task5_demo.py --all
+python3 task5_demo.py --all
 
 # Run a specific scenario
-uv run python task5_demo.py --scenario 1
-uv run python task5_demo.py --scenario 2
-uv run python task5_demo.py --scenario 3
+python3 task5_demo.py --scenario 1
+python3 task5_demo.py --scenario 2
+python3 task5_demo.py --scenario 3
 ```
 
 **Or use programmatically**:
